@@ -4,3 +4,13 @@
     width:85px; /* Ou o valor desejado */
   }
   
+
+  .news {
+    border-bottom: 1px dashed #ddd;
+    padding: 35px;
+    color: #9D9C6A;
+    font-size: 20.9em;
+    margin-top: 100px;
+    margin-bottom: 10px;
+  }
+  
