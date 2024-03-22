@@ -5,13 +5,10 @@
 // export default Home
 // pages/formulario.js
 
- 
 import { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import Select from 'react-select';
-import utilStyles from '../styles/utils.module.css';
-
 
 
 function Formulario() {
@@ -22,8 +19,6 @@ function Formulario() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [query, setQuery] = useState('');
   const [endereco, setEndereco] = useState('');
-  const [email, setEmail] = useState('');
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,16 +47,16 @@ function Formulario() {
         if(query == 'Verified Instructs'){
           queryRef = queryRef.where('instructorIsVerified', '==', true);
         }
-        if(query == 'Close to Expire'){
-          queryRef = queryRef.where('instructorIsVerified', '==', 1);
-        }
+       
 
       }
 
       const snapshot = await queryRef.get();
-      const newData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(),
-        email: doc.data().userEmail
-      }));
+      const newData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+     
+ 
+      //const newData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
  
       setData(newData);
@@ -106,22 +101,19 @@ function Formulario() {
 
 
   const handleCheckboxChange = (e) => {
-    const selectedQuery = e.target.value; 
-    setQuery(selectedQuery);
-   //  setEmail('');
-   //setSelectedUser(null);
+    const selectedQuery = e.target.value;
+    //setSelectedUser(null);
    
-  
+    setQuery(selectedQuery);
+    setEndereco('');
+    // setNewUserName('');
+    // setSelectedItem(null);
+    // setEndereco('');
   };
 
   return (
     <div>
       <h1>Formulário</h1>
-      <style jsx>{`
-		  h1 {
-		    font-size: 3rem;
-		  }
-		`}</style>
       <div>
         <input type="checkbox" id="awaitingApproval" value="Awaiting for Approval" checked={query === "Awaiting for Approval"} onChange={handleCheckboxChange} />
         <label htmlFor="awaitingApproval">Awaiting for Approval</label>
@@ -145,24 +137,34 @@ function Formulario() {
             ))}
           </select>
         </div>
-        {selectedUser &&   ( 
-
+        {selectedUser && (
           <div className="mt-4">
-            <label htmlFor="email" className="labelWidth">E-mail:</label>
-  
-
-              <input
-             
-              id="email"
+            
+           
+           
+            <label htmlFor="endereco" className="block text-sm font-medium text-gray-700">Endereço:</label>
+            <input
+            disabled
+              id="endereco"
               type="text"
-              value={selectedUser.email}
-              onChange={e => setEmail(e.target.value)}
-              
-              className={utilStyles.backToHome}
+              value={selectedUser.userEmail}
+              onChange={e => setEndereco(e.target.value)}
+              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
+
+          
+
+ 
+            {/* <label htmlFor="newUserName" className="block text-sm font-medium text-gray-700">Novo Nome de Usuário:</label>
+            <input
+              id="newUserName"
+              type="text"
+              value={newUserName}
+              onChange={e => setNewUserName(e.target.value)}
+              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            /> */}
              <br></br>
-             <br></br>
-            <button onClick={handleUpdateIsVerified}  className={utilStyles.backToHome}>
+            <button onClick={handleUpdateIsVerified} className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Accept
             </button>
           </div>
