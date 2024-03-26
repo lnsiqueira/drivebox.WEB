@@ -24,7 +24,7 @@ function Formulario() {
       };
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
-      let queryRef = db.collection('users');
+      let queryRef = db.collection('users').where('userType', '==' , 'I');
 
       if (query === 'Awaiting for Approval') {
         queryRef = queryRef.where('instructorIsVerified', '==', false);
@@ -97,7 +97,7 @@ function Formulario() {
       </div>
       <div className="container mx-auto mt-8">
         <div className="w-64">
-          <label htmlFor="dados" className="block text-sm font-medium text-gray-700">Instruct:</label>
+          <label htmlFor="dados" className="block text-sm font-medium text-gray-700">Instruct: </label>
           <select id="dados" defaultValue="" onChange={handleChange}>
             <option value="" disabled hidden>Select Instruct</option>
             {data.map(item => (
@@ -111,7 +111,7 @@ function Formulario() {
 
         {selectedUser && (
           <div className="mt-4">
-            <label htmlFor="email" className="labelWidth">E-mail:</label>
+            <label htmlFor="email" className="labelWidth">E-mail: </label>
             <input
               disabled
               id="email"
@@ -120,12 +120,21 @@ function Formulario() {
               className={utilStyles.email}
             />
             <br></br>
-            <label htmlFor="email" className="labelWidth">adiNumber:</label>
+            <label htmlFor="email" className="labelWidth">Adi Number: </label>
             <input
               disabled
               id="email"
               type="text"
               value={selectedUser.adiNumber}
+              className={utilStyles.email}
+            />
+            <br></br>
+            <label htmlFor="certificateNumber" className="labelWidth">Certificate Number: </label>
+            <input
+              disabled
+              id="certificateNumber"
+              type="text"
+              value={selectedUser.certificateNumber}
               className={utilStyles.email}
             />
            <div>
